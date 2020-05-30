@@ -40,7 +40,7 @@ class Summarizer():
             self.writer.add_scalars(combine_name,scalar_dict,Summarizer._global_step(epoch,batch_size,batch))
 
 
-    def save_batch_images(self,image_name,image_batch,dataformats = 'CHW',epoch,batch_size,batch=None):
+    def save_batch_images(self,image_name,image_batch,epoch,batch_size,batch=None,dataformats = 'CHW'):
         self.writer.add_images(image_name,image_batch,Summarizer._global_step(epoch,batch_size,batch),dataformats=dataformats)
 
     def save_prcurve(self,labels,preds,epoch,batch_size,batch=None):
