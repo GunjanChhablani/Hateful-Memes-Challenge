@@ -24,7 +24,7 @@ def get_classifier(classifier):
                     #print(layers)
                 elif(layer==classifier.params.num_layers-1):
                     layers.append(nn.Linear(classifier.params.hidden_dims[-1],classifier.params.out_dim))
-                    if(classifiers.params.activation.output.name):
+                    if(classifier.params.activation.output.name):
                         layers.append(configmapper.get_object('activations',classifier.params.activation.output.name)(**classifier.params.activation.output.params.as_dict()))
                     #print(layers)
                 else:
