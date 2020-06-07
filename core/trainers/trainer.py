@@ -24,7 +24,8 @@ class Trainer:
         self.eval_config = self._config.eval
 ## Train
     def train(self,model,dataset,verbose,tqdm_out=True,eval_dataset=None):
-        model.to(torch.device(self._config.main_config.device.name))
+        device = torch.device(self._config.main_config.device.name)
+        model.to(device)
         optim_params = self.train_config.optimizer.params
         if(optim_params):
             optimizer = configmapper.get_object('optimizers',self.train_config.optimizer.type)(model.parameters(),**map_dict_to_obj(optim_params.as_dict()))
@@ -60,14 +61,14 @@ class Trainer:
         while(step<max_steps):
             epoch+=1
             running_loss = 0
-            all_labels = torch.LongTensor()
-            all_outputs = torch.Tensor()
+            all_labels = torch.LongTensor().to(device)
+            all_outputs = torch.Tensor().to(device)
             for i,batch in tqdm(enumerate(train_loader)):
                 if(step>=max_steps):
                     break_all = True
                     break
                 step+=1
-                *inputs, labels = [value.to(torch.device(self._config.main_config.device.name)) for value in batch]
+                *inputs, labels = [value.to(device) for value in batch]
                 optimizer.zero_grad()
                 outputs = model(*inputs)
                 loss = criterion(outputs,labels)
@@ -87,7 +88,7 @@ class Trainer:
                         train_logger.save_params([metric(outputs,labels) for metric in self.metrics],[metric for metric in self._config.main_config.metrics],combine=True,combine_name='metrics',epoch=epoch,batch_size=self.train_config.loader_params.batch_size,batch=i+1)
 
                 if(eval_dataset is not None and step%eval_interval==eval_interval-1):
-                    self.eval(model,eval_dataset,epoch,i,log_values,criterion)
+                    self.eval(model,eval_dataset,epoch,i,log_values,criterion,device)
                 pbar.update(1)
 
 
@@ -115,16 +116,16 @@ class Trainer:
             pbar.close()
 
 ## Evaluate
-    def eval(self,model,dataset,epoch,i,log_values,criterion):
+    def eval(self,model,dataset,epoch,i,log_values,criterion,device):
         eval_logger = Logger(**self.eval_config.log.logger_params.as_dict())
         eval_loader = DataLoader(dataset,**self.eval_config.loader_params.as_dict())
-        all_outputs = torch.Tensor()
-        all_labels = torch.LongTensor()
+        all_outputs = torch.Tensor().to(device)
+        all_labels = torch.LongTensor().to(device)
         print("Evaluating")
         with torch.no_grad():
             val_loss = 0
             for j,batch in tqdm(enumerate(eval_loader)):
-                *inputs, labels = [value.to(torch.device(self._config.main_config.device.name)) for value in batch]
+                *inputs, labels = [value.to(device) for value in batch]
                 outputs = model(*inputs)
                 loss = criterion(outputs,labels)
                 val_loss+=loss.item()

@@ -22,7 +22,6 @@ parser.add_argument('--data',type=str,action='store',help='The configuration for
 
 args = parser.parse_args()
 # print(vars(args))
-print(type(args.default))
 main_config = Config(path = args.default)
 model_config = Config(path = args.model)
 trainer_config = Config(path = args.trainer)
