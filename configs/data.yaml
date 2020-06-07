@@ -1,12 +1,12 @@
-data_dir: ./drive/My Drive/Hateful-Memes-Challenge/data
+data_dir: /content/drive/My Drive/Hateful-Memes-Challenge/data
 images:
-    train: ./drive/My Drive/Hateful-Memes-Challenge/data/
-    dev: ./drive/My Drive/Hateful-Memes-Challenge/data/
-    test: ./drive/My Drive/Hateful-Memes-Challenge/data/
+    train: /content/drive/My Drive/Hateful-Memes-Challenge/data/
+    dev: /content/drive/My Drive/Hateful-Memes-Challenge/data/
+    test: /content/drive/My Drive/Hateful-Memes-Challenge/data/
 annotations:
-    train: ./drive/My Drive/Hateful-Memes-Challenge/data/train.jsonl
-    dev: ./drive/My Drive/Hateful-Memes-Challenge/data/dev.jsonl
-    test: ./drive/My Drive/Hateful-Memes-Challenge/data/test.jsonl
+    train: /content/drive/My Drive/Hateful-Memes-Challenge/data/train.jsonl
+    dev: /content/drive/My Drive/Hateful-Memes-Challenge/data/dev.jsonl
+    test: /content/drive/My Drive/Hateful-Memes-Challenge/data/test.jsonl
 get_image: true
 get_text: false
 image_processor:
