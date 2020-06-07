@@ -19,7 +19,7 @@ class Logger():
         try:
             if(not os.path.exists(log_dir)):
                 os.makedir(log_dir)
-            if(not(os.exists(self.model_path))):
+            if(not(os.path.exists(self.model_path))):
                 os.makedir(self.model_path)
             else:
                 print("Directory Already Exists.")
