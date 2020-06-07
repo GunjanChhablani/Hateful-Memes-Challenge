@@ -70,4 +70,3 @@ For the first phase, we use the weighted Adam Optimization technique, with the s
 
 ## Extra Papers
 - Multimodal Deep Learning, Authors : - [Paper Link](https://people.csail.mit.edu/khosla/papers/icml2011_ngiam.pdf), Authors : Jiquan Ngiam, Aditya Khosla, Mingyu Kim, Juhan Nam, Honglak Lee, Andrew Y. Ng
-  -
