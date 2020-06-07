@@ -1,0 +1,24 @@
+data_dir: ./data
+images:
+    train: ./data/
+    dev: ./data/
+    test: ./data/
+annotations:
+    train: ./data/train.jsonl
+    dev: ./data/dev.jsonl
+    test: ./data/test.jsonl
+get_image: true
+get_text: false
+image_processor:
+    type: torchvision
+    params:
+        - type: Resize
+          params:
+            size: [224,224]
+            interpolation: BICUBIC
+        - type: ToTensor
+          params: null # Need to write it at as null if no parameters are passed,
+        - type: Normalize
+          params:
+            mean: [0.485,0.456,0.406]
+            std: [0.229,0.224,0.225]

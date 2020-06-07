@@ -1,0 +1,3 @@
+--default ./configs/default.yaml
+--model ./configs/models/unimodal/image.yaml
+--run ./configs/run.yaml

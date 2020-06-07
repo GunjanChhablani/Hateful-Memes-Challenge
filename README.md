@@ -1,6 +1,23 @@
 # Hateful-Memes-Challenge
 Work on the Hateful Memes Challenge 2020 by Facebook AI
+
 URLs : [Facebook](https://ai.facebook.com/blog/hateful-memes-challenge-and-data-set), [DrivenData](https://www.drivendata.org/competitions/64/hateful-memes/?fbclid=IwAR0tcPtO2MEYoCoPYMOFAf9LpkEVDvlJ2PDbXBFAkS1rjdOlECgIzNZOol4)
+
+
+## Usage
+```bash
+make
+conda activate hmc
+python train.py
+```
+You can also use one of our notebooks for the same.
+
+## Supported Models
+- [x] ResNet 152, 2 Classification Layers
+
+- [ ] BERT
+
+
 ## Data Description
 This description of the data is based on the [paper](https://arxiv.org/pdf/2005.04790.pdf) on the Challenge:
 - The dataset is created from scratch based on images from Getty Images
@@ -27,14 +44,15 @@ More information will be added with the Exploratory Data Analysis on this datase
 
 ### Phase 1 - Expected Date : 7 June 2020.
 For the first phase, we use the weighted Adam Optimization technique, with the suggest &eta;,&beta; values from the paper. We use the number of epochs for each case depending on the step value of 22000, and the batch size. A cosine decay scheduler with warm restart is used on the learning rate, and the values chosen are inspired from the paper.
-|Model|Frozen Layers|Used Layer|Classification Layers|
 
+|Model|Frozen Layers|Used Layer|Classification Layer|Train AUROC|Dev AUROC|Test AUROC|
+|-|-|-|-|-|-|-|
 
 ## Baseline Performance (See Paper)
 <NEED TO ADD BASELINE RESULTS FROM THE PAPER>
 
 ## Useful Links
-- [Starter Kit Code](https://github.com/facebookresearch/mmf/tree/master/projects/hateful_memes.)
+- [Starter Kit Code](https://github.com/facebookresearch/mmf/tree/master/projects/hateful_memes)
 - [Facebook Blog on Hateful Memes Challenge](https://ai.facebook.com/blog/hateful-memes-challenge-and-data-set)
 - [MMF - Multimodal Framework] (https://mmf.readthedocs.io/en/latest/)
 
@@ -51,5 +69,5 @@ For the first phase, we use the weighted Adam Optimization technique, with the s
 
 
 ## Extra Papers
-- **Multimodal Deep Learning**, Authors : - [Paper Link](https://people.csail.mit.edu/khosla/papers/icml2011_ngiam.pdf), Authors : Jiquan Ngiam, Aditya Khosla, Mingyu Kim, Juhan Nam, Honglak Lee, Andrew Y. Ng
+- Multimodal Deep Learning, Authors : - [Paper Link](https://people.csail.mit.edu/khosla/papers/icml2011_ngiam.pdf), Authors : Jiquan Ngiam, Aditya Khosla, Mingyu Kim, Juhan Nam, Honglak Lee, Andrew Y. Ng
   -

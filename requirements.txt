@@ -1,4 +1,5 @@
-jsonlines
 pyyaml
 torchviz
 torchsummary
+jsonlines
+pytorch-nlp

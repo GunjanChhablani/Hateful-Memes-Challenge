@@ -1,8 +1,0 @@
-working_dir: ./
-train_file: ./data/train.jsonl
-dev_file: ./data/dev.jsonl
-test_file: ./data/test.jsonl
-utils_path: ./utils
-save_logs: True
-log_dir: ./logs/
-log_subdir_format: '%(model_name)_%(dataname)_%(config_name)'

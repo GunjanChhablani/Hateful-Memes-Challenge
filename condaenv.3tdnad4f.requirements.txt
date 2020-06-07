@@ -1,0 +1,8 @@
+torchviz
+jsonlines
+opencv-python
+pyyaml
+pytorch-nlp
+torchsummary
+torchtext
+spacy

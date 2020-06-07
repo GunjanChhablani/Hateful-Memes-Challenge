@@ -1,0 +1,32 @@
+name: unimodal
+mode: image
+text_encoder: null
+num_labels: 2
+modal_encoder:
+    in_channels: 3
+    type: resnet152
+    freeze_base: False
+    params:
+        pretrained: true
+        pool_type: avg
+        remove_classifier: true
+    in_features: 2048
+classifier:
+    type: mlp
+    custom_layers: null
+    params:
+        in_dim: 2048
+        out_dim: 2
+        num_layers: 2
+        hidden_dims:
+            - 768
+        activation:
+            default:
+                name: relu
+                params:
+                    inplace: False
+
+            output:
+                name: logsoftmax
+                params:
+                    dim: 1
