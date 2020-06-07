@@ -1,6 +1,6 @@
 version: 1.0
 working_dir: ./
-data_dir: ./data/
+data_dir: ./drive/My Drive/Hateful-Memes-Challenge/data/
 log_dir: ./logs/
 sub_configs: &main
     run: ./configs/run.yaml
