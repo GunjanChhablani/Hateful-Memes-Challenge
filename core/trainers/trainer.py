@@ -86,7 +86,7 @@ class Trainer:
                         train_logger.save_params([loss.item()/self.train_config.loader_params.batch_size],['train_loss'],epoch=epoch,batch_size=self.train_config.loader_params.batch_size,batch=i+1)
 
                     if(log_values['metrics']):
-                        train_logger.save_params([metric(outputs,labels) for metric in self.metrics],[metric for metric in self._config.main_config.metrics],combine=True,combine_name='metrics',epoch=epoch,batch_size=self.train_config.loader_params.batch_size,batch=i+1)
+                        train_logger.save_params([metric(outputs.cpu(),labels.cpu()) for metric in self.metrics],[metric for metric in self._config.main_config.metrics],combine=True,combine_name='metrics',epoch=epoch,batch_size=self.train_config.loader_params.batch_size,batch=i+1)
 
                 if(eval_dataset is not None and step%eval_interval==eval_interval-1):
                     self.eval(model,eval_dataset,epoch,i,log_values,criterion,device)
