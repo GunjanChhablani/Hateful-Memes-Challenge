@@ -14,7 +14,7 @@ You can also use one of our notebooks for the same.
 
 ## Supported Models
 - [x] ResNet 152, 2 Classification Layers
-
+- [ ] Faster RCNN
 - [ ] BERT
 
 
