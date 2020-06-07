@@ -58,6 +58,7 @@ class Trainer:
             pbar = tqdm(total = max_steps)
         print('Starting training...')
         print(max_steps)
+
         while(step<max_steps):
             epoch+=1
             running_loss = 0
@@ -99,7 +100,7 @@ class Trainer:
             if(log_values['loss']):
                 train_logger.save_params(loss_list,loss_name_list,epoch=epoch,batch_size=self.train_config.loader_params.batch_size,batch=self.train_config.loader_params.batch_size)
 
-            metric_list =[metric(all_outputs,all_labels) for metric in self.metrics]
+            metric_list =[metric(all_outputs.cpu(),all_labels.cpu()) for metric in self.metrics]
             metric_name_list= [metric for metric in self._config.main_config.metrics]
             if(log_values['metrics']):
                 train_logger.save_params(metric_list,metric_name_list,combine=True,combine_name='metrics',epoch=epoch,batch_size=self.train_config.loader_params.batch_size,batch=self.train_config.loader_params.batch_size)
@@ -137,7 +138,7 @@ class Trainer:
             if(log_values['loss']):
                 val_logger.save_params(loss_list,loss_name_list,epoch=epoch,batch_size=self.train_config.loader_params.batch_size,batch=i+1)
 
-            metric_list =[metric(all_outputs,all_labels) for metric in self.metrics]
+            metric_list =[metric(all_outputs.cpu(),all_labels.cpu()) for metric in self.metrics]
             metric_name_list= [metric for metric in self._config.main_config.metrics]
             if(log_values['metrics']):
                 val_logger.save_params(metric_list,metric_name_list,combine=True,combine_name='metrics',epoch=epoch,batch_size=self.eval_config.loader_params.batch_size,batch=i+1)
