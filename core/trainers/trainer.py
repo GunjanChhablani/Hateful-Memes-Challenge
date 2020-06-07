@@ -82,7 +82,7 @@ class Trainer:
 
 
                 if(step%log_interval==log_interval-1):
-                    print(f"Step:{step}/{max_steps}"")
+                    print(f"Step:{step}/{max_steps}")
                     loss_list = [loss.item()/self.train_config.loader_params.batch_size]
                     loss_name_list = ['train_loss']
                     if(log_values['loss']):
