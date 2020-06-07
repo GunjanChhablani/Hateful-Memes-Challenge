@@ -57,7 +57,7 @@ class Trainer:
         if(tqdm_out):
             pbar = tqdm(total = max_steps)
         print('Starting training...')
-        print(max_steps)
+        # print(max_steps)
 
         while(step<max_steps):
             epoch+=1
@@ -82,12 +82,20 @@ class Trainer:
 
 
                 if(step%log_interval==log_interval-1):
+                    print(f"Step:{step}/{max_steps}"")
+                    loss_list = [loss.item()/self.train_config.loader_params.batch_size]
+                    loss_name_list = ['train_loss']
                     if(log_values['loss']):
-                        train_logger.save_params([loss.item()/self.train_config.loader_params.batch_size],['train_loss'],epoch=epoch,batch_size=self.train_config.loader_params.batch_size,batch=i+1)
+                        train_logger.save_params(loss_list,loss_name_list,epoch=epoch,batch_size=self.train_config.loader_params.batch_size,batch=i+1)
 
+                    metric_list = [metric(outputs.cpu(),labels.cpu()) for metric in self.metrics]
+                    metric_name_list = [metric for metric in self._config.main_config.metrics]
                     if(log_values['metrics']):
-                        train_logger.save_params([metric(outputs.cpu(),labels.cpu()) for metric in self.metrics],[metric for metric in self._config.main_config.metrics],combine=True,combine_name='metrics',epoch=epoch,batch_size=self.train_config.loader_params.batch_size,batch=i+1)
-
+                        train_logger.save_params(metric_list,metric_name_list,combine=True,combine_name='metrics',epoch=epoch,batch_size=self.train_config.loader_params.batch_size,batch=i+1)
+                    print(loss_list)
+                    print(loss_name_list)
+                    print(metric_list)
+                    print(metric_name_list)
                 if(eval_dataset is not None and step%eval_interval==eval_interval-1):
                     self.eval(model,eval_dataset,epoch,i,log_values,criterion,device)
                 pbar.update(1)

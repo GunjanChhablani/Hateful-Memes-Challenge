@@ -27,6 +27,6 @@ classifier:
                     inplace: False
 
             output:
-                name: logsoftmax
+                name: null
                 params:
-                    dim: 1
+                    # dim: 1
