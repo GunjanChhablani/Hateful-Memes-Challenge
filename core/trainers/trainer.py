@@ -24,7 +24,7 @@ class Trainer:
         self.eval_config = self._config.eval
 ## Train
     def train(self,model,dataset,verbose,tqdm_out=True,eval_dataset=None):
-
+        model.to(torch.device(self._config.main_config.device.name))
         optim_params = self.train_config.optimizer.params
         if(optim_params):
             optimizer = configmapper.get_object('optimizers',self.train_config.optimizer.type)(model.parameters(),**map_dict_to_obj(optim_params.as_dict()))
@@ -62,7 +62,7 @@ class Trainer:
             running_loss = 0
             all_labels = torch.LongTensor()
             all_outputs = torch.Tensor()
-            for i,batch in enumerate(train_loader):
+            for i,batch in tqdm(enumerate(train_loader)):
                 if(step>=max_steps):
                     break_all = True
                     break
@@ -120,9 +120,10 @@ class Trainer:
         eval_loader = DataLoader(dataset,**self.eval_config.loader_params.as_dict())
         all_outputs = torch.Tensor()
         all_labels = torch.LongTensor()
+        print("Evaluating")
         with torch.no_grad():
             val_loss = 0
-            for j,batch in enumerate(eval_loader):
+            for j,batch in tqdm(enumerate(eval_loader)):
                 *inputs, labels = [value.to(torch.device(self._config.main_config.device.name)) for value in batch]
                 outputs = model(*inputs)
                 loss = criterion(outputs,labels)
