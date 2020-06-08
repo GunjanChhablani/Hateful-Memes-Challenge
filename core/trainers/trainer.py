@@ -56,7 +56,7 @@ class Trainer:
         break_all=False
         if(tqdm_out):
             pbar = tqdm(total = max_steps)
-        print('Starting training...')
+        print('\nTraining\n')
         # print(max_steps)
 
         while(step<max_steps):
@@ -82,7 +82,7 @@ class Trainer:
 
 
                 if(step%log_interval==log_interval-1):
-                    print(f"Epoch:{epoch}, Step:{step}/{max_steps}")
+                    print(f"\nEpoch:{epoch}, Step:{step}/{max_steps}")
                     loss_list = [loss.item()/self.train_config.loader_params.batch_size]
                     loss_name_list = ['train_loss']
                     if(log_values['loss']):
@@ -114,7 +114,7 @@ class Trainer:
             metric_name_list= [metric for metric in self._config.main_config.metrics]
             if(log_values['metrics']):
                 train_logger.save_params(metric_list,metric_name_list,combine=True,combine_name='metrics',epoch=epoch,batch_size=self.train_config.loader_params.batch_size,batch=self.train_config.loader_params.batch_size)
-            print(f'Train, Epoch:{epoch}')
+            print(f'\nTrain, Epoch:{epoch}')
 
             for k,v in dict(zip(loss_name_list,loss_list)).items():
                 print(f"{k}:{v}")
@@ -139,7 +139,7 @@ class Trainer:
 
         max_steps = self.eval_config.max_steps
         step = 0
-        print("Evaluating")
+        print("\nEvaluating")
         with torch.no_grad():
             val_loss = 0
             for j,batch in tqdm(enumerate(val_loader)):
@@ -153,7 +153,7 @@ class Trainer:
                 all_labels = torch.cat((all_labels,labels),0)
                 all_outputs = torch.cat((all_outputs,outputs),0)
                 step+=1
-                
+
             val_loss = val_loss/len(val_loader)
             loss_list = [val_loss]
             loss_name_list = ['eval_loss']
