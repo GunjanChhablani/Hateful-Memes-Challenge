@@ -6,16 +6,16 @@ main_config: &main
         - binary_auroc
         - accuracy
     device:
-        name: 'cuda:0'
+        name: 'cpu'
 
 train: &train
     # Change to different value if not using max_steps
     <<: *main
     # Can add the max_epochs vs max_steps functionality
-    max_steps: !!int 22000
-    eval_interval: !!int 500
+    max_steps: !!int 2
+    eval_interval: !!int 1
     loader_params:
-        batch_size: !!int 32
+        batch_size: !!int 10
         num_workers: !!int 4
         shuffle: true
     optimizer:
@@ -27,7 +27,7 @@ train: &train
     scheduler:
         type: cosine_warm
         params:
-            T_0: !!int 2000
+            T_0: !!int 1
             T_mult: !!int 2
             eta_min: !!float 1e-7
     criterion:
@@ -47,8 +47,9 @@ train: &train
 
 eval:
     <<: *main
+    max_steps: !!int 2
     loader_params:
-        batch_size: !!int 32
+        batch_size: !!int 4
         num_workers: !!int 4
         shuffle: false
     log:

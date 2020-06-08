@@ -1,0 +1,10 @@
+version: 1.0
+working_dir: ./
+data_dir: ./data/
+log_dir: ./logs/
+sub_configs: &main
+    run: ./configs/demo/run.yaml
+    data: ./configs/demo/data.yaml
+    models:
+        unimodal:
+            image: ./configs/demo/models/unimodal/image.yaml

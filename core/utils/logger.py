@@ -67,7 +67,7 @@ class Logger():
     def draw_model_architecture(model,output,input,input_name,save_name):
         make_dot(output,params = dict(list(model.named_parameters()))+[(input_name,input)])
 
-    def __del__(self):
+    def close(self):
         self.writer.close()
 
     @staticmethod

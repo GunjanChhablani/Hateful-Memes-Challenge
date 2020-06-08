@@ -24,9 +24,11 @@ def binary_auroc(outputs,labels):
     ## More functionality can be added through the parameters.
     ## Custom AUROC function/class can also be defined.
     """
-    outputs_index = F.softmax(outputs,dim=1)[:,1]
-    return roc_auc_score(labels.detach().numpy(),outputs_index.detach().numpy())
-
+    outputs_index = F.softmax(outputs.detach(),dim=1)[:,1]
+    try:
+        return roc_auc_score(labels.detach().numpy(),outputs_index.numpy())
+    except:
+        return 0
 @configmapper.map('metrics','accuracy')
 def accuracy(outputs,labels):
     """Function to compute Accuracy Score

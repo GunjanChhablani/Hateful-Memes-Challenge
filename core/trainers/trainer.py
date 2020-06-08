@@ -82,7 +82,7 @@ class Trainer:
 
 
                 if(step%log_interval==log_interval-1):
-                    print(f"Step:{step}/{max_steps}")
+                    print(f"Epoch:{epoch}, Step:{step}/{max_steps}")
                     loss_list = [loss.item()/self.train_config.loader_params.batch_size]
                     loss_name_list = ['train_loss']
                     if(log_values['loss']):
@@ -92,17 +92,19 @@ class Trainer:
                     metric_name_list = [metric for metric in self._config.main_config.metrics]
                     if(log_values['metrics']):
                         train_logger.save_params(metric_list,metric_name_list,combine=True,combine_name='metrics',epoch=epoch,batch_size=self.train_config.loader_params.batch_size,batch=i+1)
-                    print(loss_list)
-                    print(loss_name_list)
-                    print(metric_list)
-                    print(metric_name_list)
+
+                    for k,v in dict(zip(loss_name_list,loss_list)).items():
+                        print(f"{k}:{v}")
+                    for k,v in dict(zip(metric_name_list,metric_list)).items():
+                        print(f"{k}:{v}")
+
                 if(eval_dataset is not None and step%eval_interval==eval_interval-1):
                     self.eval(model,eval_dataset,epoch,i,log_values,criterion,device)
                 pbar.update(1)
 
 
-            loss = running_loss/len(train_loader)
-            loss_list = [loss]
+            training_loss = running_loss/len(train_loader)
+            loss_list = [training_loss]
             loss_name_list = ['train_loss']
 
             if(log_values['loss']):
@@ -113,8 +115,11 @@ class Trainer:
             if(log_values['metrics']):
                 train_logger.save_params(metric_list,metric_name_list,combine=True,combine_name='metrics',epoch=epoch,batch_size=self.train_config.loader_params.batch_size,batch=self.train_config.loader_params.batch_size)
             print(f'Train, Epoch:{epoch}')
-            print(loss_list+metric_list)
-            print(loss_name_list+metric_name_list)
+
+            for k,v in dict(zip(loss_name_list,loss_list)).items():
+                print(f"{k}:{v}")
+            for k,v in dict(zip(metric_name_list,metric_list)).items():
+                print(f"{k}:{v}")
 
             if(break_all):
                 break
@@ -126,21 +131,30 @@ class Trainer:
 
 ## Evaluate
     def eval(self,model,dataset,epoch,i,log_values,criterion,device):
-        eval_logger = Logger(**self.eval_config.log.logger_params.as_dict())
-        eval_loader = DataLoader(dataset,**self.eval_config.loader_params.as_dict())
+        val_logger = Logger(**self.eval_config.log.logger_params.as_dict())
+        val_loader = DataLoader(dataset,**self.eval_config.loader_params.as_dict())
+
         all_outputs = torch.Tensor().to(device)
         all_labels = torch.LongTensor().to(device)
+
+        max_steps = self.eval_config.max_steps
+        step = 0
         print("Evaluating")
         with torch.no_grad():
             val_loss = 0
-            for j,batch in tqdm(enumerate(eval_loader)):
+            for j,batch in tqdm(enumerate(val_loader)):
+                if(max_steps and step>=max_steps):
+                    break
                 *inputs, labels = [value.to(device) for value in batch]
                 outputs = model(*inputs)
                 loss = criterion(outputs,labels)
                 val_loss+=loss.item()
+
                 all_labels = torch.cat((all_labels,labels),0)
                 all_outputs = torch.cat((all_outputs,outputs),0)
-            val_loss = val_loss/len(eval_loader)
+                step+=1
+                
+            val_loss = val_loss/len(val_loader)
             loss_list = [val_loss]
             loss_name_list = ['eval_loss']
             if(log_values['loss']):
@@ -151,5 +165,8 @@ class Trainer:
             if(log_values['metrics']):
                 val_logger.save_params(metric_list,metric_name_list,combine=True,combine_name='metrics',epoch=epoch,batch_size=self.eval_config.loader_params.batch_size,batch=i+1)
             print('Evaluation:')
-            print(loss_list+metric_list)
-            print(loss_name_list+metric_name_list)
+
+            for k,v in dict(zip(loss_name_list,loss_list)).items():
+                print(f"{k}:{v}")
+            for k,v in dict(zip(metric_name_list,metric_list)).items():
+                print(f"{k}:{v}")
