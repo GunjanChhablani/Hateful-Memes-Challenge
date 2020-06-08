@@ -21,7 +21,7 @@ train: &train
     optimizer:
         type: adam_w
         params:
-            lr: !!float 1
+            lr: !!float 1e-2
             betas: [0.9,0.998]
             eps: !!float 1e-8
     scheduler:
@@ -34,7 +34,7 @@ train: &train
         type: cross_entropy
         params:
     log:
-        log_interval: !!int 1
+        log_interval: !!int 500
         logger_params:
             model: unimodal
             trainer: trainer
