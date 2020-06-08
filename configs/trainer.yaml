@@ -47,6 +47,7 @@ train: &train
 
 eval:
     <<: *main
+    max_steps: null
     loader_params:
         batch_size: !!int 32
         num_workers: !!int 4

@@ -45,7 +45,7 @@ dev_data = MemesDataset(data_config,'dev')
 
 ## Model
 model = configmapper.get_object('models',model_config.name)(model_config)
-print(summary(model,(3,224,224)))
+print(summary(model.to(torch.device(trainer_config.main_config.device.name)),(3,224,224)))
 ## Trainer
 trainer = configmapper.get_object('trainers',trainer_config.name)(trainer_config)
 

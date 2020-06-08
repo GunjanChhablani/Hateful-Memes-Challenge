@@ -19,6 +19,8 @@ def binary_auroc(outputs,labels):
     -------
     roc_auc_score : int,
         The roc_auc_score computed between the outputs and the labels
+        If all classes are of a single class in a batch, ROC is not defined.
+        Hence, a 0 is returned.
 
     ## Update tips:
     ## More functionality can be added through the parameters.
