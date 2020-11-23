@@ -3,6 +3,9 @@ Work on the Hateful Memes Challenge 2020 by Facebook AI
 
 URLs : [Facebook](https://ai.facebook.com/blog/hateful-memes-challenge-and-data-set), [DrivenData](https://www.drivendata.org/competitions/64/hateful-memes/?fbclid=IwAR0tcPtO2MEYoCoPYMOFAf9LpkEVDvlJ2PDbXBFAkS1rjdOlECgIzNZOol4)
 
+I created this repository with the intent to participate in the competition but I missed the deadline. A lot of what I tried failed, and I got stuck at a point.
+
+Since the competition is now over, and multimodal learning is one of my research interests, I'll keep making changes to this repository, trying new approaches, and updating the results here.
 
 ## Usage
 ```bash
@@ -42,8 +45,8 @@ More information will be added with the Exploratory Data Analysis on this datase
 
 ## Experiments
 
-### Phase 1 - Expected Date : 7 June 2020.
-For the first phase, we use the weighted Adam Optimization technique, with the suggest &eta;,&beta; values from the paper. We use the number of epochs for each case depending on the step value of 22000, and the batch size. A cosine decay scheduler with warm restart is used on the learning rate, and the values chosen are inspired from the paper.
+### Phase 1 - Expected Date : 30 Nov 2020.
+For the first phase, we use the weighted Adam Optimization technique, with the suggest &eta;,&beta; values from the paper. I use the number of epochs for each case depending on the step value of 22000, and the batch size. A cosine decay scheduler with warm restart is used on the learning rate, and the values chosen are inspired from the paper.
 
 |Model|Frozen Layers|Used Layer|Classification Layer|Train AUROC|Dev AUROC|Test AUROC|
 |-|-|-|-|-|-|-|
